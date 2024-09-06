@@ -20,6 +20,10 @@
 									"const resposta = pm.response.json();",
 									"pm.globals.set(\"token\", resposta.authorization)",
 									"",
+									"pm.test(\"Deve retornar mensagem Login com sucesso\", function () {",
+									"    pm.expect(pm.response.text()).to.contain(\"Login realizado com sucesso\");",
+									"});",
+									"",
 									"pm.test(\"Status code is 201\", function () {",
 									"    pm.response.to.have.status(201);",
 									"});"
@@ -59,6 +63,10 @@
 								"exec": [
 									"pm.test(\"Status code is 201\", function () {",
 									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Mensagem: \", function() {",
+									"     pm.expect(pm.response.text()).to.contain(\"Cadastro realizado com sucesso\");",
 									"});",
 									"",
 									"const resposta = pm.response.json();",
@@ -232,7 +240,7 @@
 									"});",
 									"",
 									"pm.test(\"Deve retornar mensagem de sucesso\", function () {",
-									"    pm.expect(pm.response.text()).to.contain(\" Mensagem Errada\");",
+									"    pm.expect(pm.response.text()).to.contain(\"Registro excluído com sucesso \");",
 									"});"
 								],
 								"type": "text/javascript",
@@ -254,6 +262,53 @@
 								"type": "text"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}usuarios/{{id_usuario}}",
+							"host": [
+								"{{local}}usuarios"
+							],
+							"path": [
+								"{{id_usuario}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Usuario Deletado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code é 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Deve retornar Usuario não encontrado\", function () {",
+									"    pm.expect(pm.response.text()).to.contain(\"Usuário não encontrado\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "",
